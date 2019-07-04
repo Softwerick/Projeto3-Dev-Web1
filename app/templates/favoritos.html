@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+	{% block content %}
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<table class="tabela">
+				<colgroup>
+					<col width="10%">
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+					<col width="15%">
+				</colgroup>
+			{% for message in get_flashed_messages() %}
+				<div class="alert alert-warning">
+					{{ message }}
+				</div>
+        {% endfor %}
+				<thead>
+					<tr>
+						<th colspan="6">Lista de Favoritos</th>
+					</tr>
+					<tr>
+						<th></th>
+						<th>Produto</th>
+						<th>Preço</th>
+						<th>Qtd/Embalagem</th>
+						<th>Qtd em Estoque</th>
+					</tr>
+				</thead>
+				<tbody align="Center">
+				{% for favorito in favoritos %}
+					<tr>
+						<td><img src="../static/img/download.png"></td>
+						{% if current_user.role_id == 1 %}
+						<td class="editar_produto"><a href="/editar_produto/{{ favorito.produto.id }}">{{ favorito.produto.name}}</a></td>
+						{% else %}
+						<td>{{favorito.produto.name}}</td>
+						{% endif %}
+						<td>R${{favorito.produto.preco}}</td>
+						<td>{{favorito.produto.peso}}</td>
+						<td>{{favorito.produto.estoque}} unidades</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	{% endblock %}
